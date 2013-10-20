@@ -4,7 +4,11 @@ import sublime, sublime_plugin
 class CssPrimerFromFileCommand(sublime_plugin.TextCommand):
   def run(self, edit):
     source = self.view.file_name()
+<<<<<<< HEAD
     target = source.sub('.html', '') + '.css'
+=======
+    target = re.sub('.html', '', source) + '.css'
+>>>>>>> Initial commit
     if target:
       with open(source, 'r') as f:
         html = f.read()
