@@ -3,8 +3,17 @@ import sublime, sublime_plugin
 
 class CssPrimerFromFileCommand(sublime_plugin.TextCommand):
   def run(self, edit):
+    if self.view.settings().get('syntax') != 'Packages/HTML/HTML.tmLanguage':
+      return
     source = self.view.file_name()
-    target = re.sub('.html', '', source) + '.css'
+    self.view.window().show_input_panel(
+      'Output CSS File',
+      re.sub('.html', '', source) + '.css',
+      lambda target: self.convert(source, target),
+      None,
+      None)
+
+  def convert(self, source, target):
     if target:
       with open(source, 'r') as f:
         html = f.read()
@@ -16,7 +25,7 @@ class CssPrimerFromFileCommand(sublime_plugin.TextCommand):
       self.view.window().open_file(target)
 
   def is_enabled(self):
-    return True 
+    return True
 
 
 class CSSPrimer:
@@ -34,6 +43,7 @@ class CSSPrimer:
     if class_attributes:
       for class_attribute in [classes for segments in class_attributes for classes in segments.split()]:
         class_string = "." + class_attribute + " {\n\n}\n\n"
-        stylesheet = stylesheet + class_string
+        if class_string not in stylesheet:
+          stylesheet = stylesheet + class_string
 
     return stylesheet
