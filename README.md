@@ -30,5 +30,4 @@ The "Packages" directory is located at:
 
 ### In Command Palette:
 
-* **CSSPrimer: Prime CSS from file** - creates a new file in the same folder using the same name as the source ending with '.css' *
-
+* **CSSPrimer: Prime CSS from file** - prompts for a location to save the output css *

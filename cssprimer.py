@@ -4,7 +4,14 @@ import sublime, sublime_plugin
 class CssPrimerFromFileCommand(sublime_plugin.TextCommand):
   def run(self, edit):
     source = self.view.file_name()
-    target = re.sub('.html', '', source) + '.css'
+    self.view.window().show_input_panel(
+      'Output CSS File',
+      re.sub('.html', '', source) + '.css',
+      lambda target: self.convert(source, target),
+      None,
+      None)
+
+  def convert(self, source, target):
     if target:
       with open(source, 'r') as f:
         html = f.read()
@@ -16,7 +23,7 @@ class CssPrimerFromFileCommand(sublime_plugin.TextCommand):
       self.view.window().open_file(target)
 
   def is_enabled(self):
-    return True 
+    return True
 
 
 class CSSPrimer:
