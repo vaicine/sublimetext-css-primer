@@ -41,6 +41,7 @@ class CSSPrimer:
     if class_attributes:
       for class_attribute in [classes for segments in class_attributes for classes in segments.split()]:
         class_string = "." + class_attribute + " {\n\n}\n\n"
-        stylesheet = stylesheet + class_string
+        if class_string not in stylesheet:
+          stylesheet = stylesheet + class_string
 
     return stylesheet
