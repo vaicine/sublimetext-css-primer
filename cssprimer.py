@@ -3,6 +3,8 @@ import sublime, sublime_plugin
 
 class CssPrimerFromFileCommand(sublime_plugin.TextCommand):
   def run(self, edit):
+    if self.view.settings().get('syntax') != 'Packages/HTML/HTML.tmLanguage':
+      return
     source = self.view.file_name()
     self.view.window().show_input_panel(
       'Output CSS File',
